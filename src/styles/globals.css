@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+select {
+  transition: border-color 0.3s, background-color 0.3s; /* Smooth transition for select fields */
+}
+
+/* Optional: Add focus states for accessibility */
+select:focus {
+  border-color: #4f46e5; /* Focus border color */
+  outline: none; /* Remove default outline */
+}
+
+.short_description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* Number of lines you want to display */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+/* CARD  */
+
+.big-container {
+  background-color: #000618;
+}
+
+
+.card {
+  width: 19.2rem; /* Adjust the width */
+  border-radius: 4px;
+  background-color: #bb88aacc; /* Light blue-gray background */
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  margin: 16px;
+  padding: 1rem;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Lift card on hover */
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+
+.signup-con{
+  background-color:#bb88aacc;
+  color: black;
+}
+.login-con{
+  background-color:#bb88aacc;
+}
+.cart-btn{
+  background-color:#bb88aacc;
+  color: black;
+  transition: all 0.1s ease-in-out;
+}
+.cart-btn:hover{
+  background-color:#a37895cc;
+  color: black;
+}
+.cart-con{
+  background-color:#bb88aacc;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+
+.description {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #ffffff;
+  margin: 0;
+}
+
+.image-container {
+  width: 100%;
+  height: 16.5rem; /* Fixed height for uniformity */
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  
+}
+
+.card-img{
+  padding: .5rem;
+}
+.image-container img {
+  transition: opacity 0.3s;
+}
+
+.image-container:hover img {
+  opacity: 0.85; /* Slight opacity change on hover */
+}
+
+.content {
+  padding: 16px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #000513;
+  transition: color 0.3s, text-shadow 0.3s;
+  text-shadow: 0 0 0px rgba(147, 150, 158, 0.7);
+  
+}
+
+.title:hover {
+  color: #171718;
+  text-shadow: 0 0 1px rgba(17, 17, 17, 0.1);
+    
+}
+
+.description {
+  color: #191a1d; /* Medium gray */
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px 16px;
+}
+
+.qty-select,
+.size-select {
+  height: 36px;
+  padding: 4px 8px;
+  border-radius: 2px;
+  background-color: #ffffff; /* Light gray for select elements */
+  color: #000000;
+  
+}
+
+.qty-select:hover,
+.size-select:hover {
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  font-weight: bold;
+}
+
+
+
+.price {
+  font-size: 2rem;
+  color: #020013; /* Dark gray */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-left: 1rem;
+  /* padding-left: 1rem; */
+  border-bottom: .1px solid #494849cc;
+}
+
+
+/* From Uiverse.io by xueyuantan */
+.button {
+  width: 9em;
+  height: 3em;
+  /* border-radius: 5em; */
+  font-size: 15px;
+  font-family: inherit;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  color: rgb(36, 33, 33);
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  color: #000000;
+  
+}
+
+
+
+
+
+header {
+  background-color: rgba(0, 6, 24, 0.8); /* Use a semi-transparent background */
+  backdrop-filter: blur(2px); /* Adjust the blur amount as needed */
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  position: relative; /* Ensure the header is positioned correctly */
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+footer{
+  background-color: #bb88aacc; /* Use a semi-transparent background */
+  backdrop-filter: blur(2px); /* Adjust the blur amount as needed */
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  position: relative; /* Ensure the header is positioned correctly */
+  z-index: 10; /* Ensure it appears above other elements */
+}
+
+
+.glow {
+  transition: box-shadow 0.3s;
+  color: #636361;
+}
+
+.glow-active {
+  box-shadow: 0 0 10px rgba(107, 114, 128, 0.7),
+    0 0 20px rgba(107, 114, 128, 0.5);
+  color: white;
+}
+
+.CATEGORY {
+  color: #ffffff; /* White text for better contrast */
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.8),
+    /* Dark shadow for depth */ 2px 2px 0 rgba(0, 0, 0, 0.8),
+    /* Slightly lighter shadow */ 3px 3px 0 rgba(0, 0, 0, 0.8); /* Lightest shadow */
+  letter-spacing: 2px;
+}
+
+
+.total-price{
+  color: red;
+}
