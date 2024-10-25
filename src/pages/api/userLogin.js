@@ -3,7 +3,7 @@ import db from "@/utils/db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const jwtSecret = "#1Edsd515add";
+const jwtSecret = process.env.ENV_SECRET;
 
 
 export default async function handler(req, res) {
