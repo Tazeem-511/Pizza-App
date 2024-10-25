@@ -25,9 +25,8 @@ export default async function handler(req, res) {
               id: user["_id"],
             },
           };
-          
-          const authToken = jwt.sign(data, jwtSecret);
           const isAdmin = await user.isAdmin;
+          const authToken = jwt.sign(data, jwtSecret);
           success = true;
           res.json({ success: success, authToken: authToken, isAdmin });
         })
