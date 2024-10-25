@@ -1,43 +1,42 @@
-import Card from "@/components/home/card";
-import CarouselComponent from "@/components/home/carousel";
+
 import { Inter } from "next/font/google";
-// import data from "./../store/data.json"; 
+// import cardData from "../store/cardData.json";
 import { useEffect, useState } from "react";
 import { baseUrl } from "@/utils/baseUrl";
 import Head from "next/head";
-
+import Card from "@/components/home/card";
+import CarouselComponent from "@/components/home/carousel";
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({data}) {
-  console.log(data.data?.data);
-  
+export default function Home({ data }) {
   let categories = new Set();
   let categoryArray;
   const [typeFilter, setTypeFilter] = useState(false);
   const foodData = [];
-
   const handleData = () => {
-    data?.map((item) => {
-      foodData.push(item), categories.add(item.category);
+    data?.map((data) => {
+      return foodData.push(data), categories.add(data.category);
     });
   };
 
   handleData();
+  useEffect(() => {
+    localStorage.setItem("isAdmin", false); //added this line here to prevent anyone from accessing /admin if not logged in.
+  }, []);
 
   categoryArray = [...categories];
-  console.log(process.env.NODE_ENV);
 
   return (
     <>
       <Head>
-        <title>PizzaWala</title>
+        <title>PizzaWizza</title>
       </Head>
       <CarouselComponent />
       <div className="container mx-auto">
         <div className="my-6 space-x-5">
           <button
             className={`border-black rounded-full dark:border-white border-2 py-1 px-3 ${
-              !typeFilter ? "glow glow-active" : "glow"
+              !typeFilter && "bg-slate-300 dark:bg-slate-600"
             } `}
             onClick={() => setTypeFilter(false)}
           >
@@ -45,8 +44,8 @@ export default function Home({data}) {
           </button>
           <button
             className={`border-black rounded-full dark:border-white border-2 py-1 px-3 ${
-              typeFilter === "Veg" ? "glow glow-active" : "glow"
-            }`}
+              typeFilter === "Veg" && "bg-slate-300 dark:bg-slate-600"
+            } `}
             onClick={() => {
               setTypeFilter("Veg");
             }}
@@ -60,11 +59,10 @@ export default function Home({data}) {
             </span>
             Veg
           </button>
-
           <button
             className={`border-black rounded-full dark:border-white border-2 py-1 px-3 ${
-              typeFilter === "Non-Veg" ? "glow glow-active" : "glow"
-            }`}
+              typeFilter === "Non-Veg" && "bg-slate-300 dark:bg-slate-600"
+            } `}
             onClick={() => {
               setTypeFilter("Non-Veg");
             }}
@@ -84,7 +82,7 @@ export default function Home({data}) {
             <>
               <div
                 key={category}
-                className=" text-4xl mt-10 mb-3 uppercase font-bold CATEGORY"
+                className=" text-4xl mt-10 mb-3 uppercase font-bold"
               >
                 {category}
               </div>
@@ -109,23 +107,22 @@ export default function Home({data}) {
   );
 }
 
+export async function getStaticProps() {
+  let data;
+  try {
+    const pizzaData = await fetch(baseUrl + "api/foodData", { method: "GET" })
+      .then((response) => response.json())
+      .catch((error) => error.message);
 
-export async function getStaticProps() { 
-    let data;
-    try {
-      const pizzaData = await fetch(baseUrl + "api/foodData", { method: "GET" })
-        .then((response) => response.json())
-        .catch((error) => error.message);
+    data = await JSON.parse(JSON.stringify(pizzaData)); // step required during deployment in staticProps
+  } catch (error) {
+    console.log(error.message);
+  }
 
-      data = await JSON.parse(JSON.stringify(pizzaData)); // step required during deployment in staticProps
-    } catch (error) {
-      console.log(error.message);
-    }
-
-    return {
-      props: {
-        data:data.data || null
-      },
-      // revalidate: 5,
-    };
+  return {
+    props: {
+      data: data.data || null,
+    },
+    revalidate: 5,
+  };
 }
