@@ -3,7 +3,8 @@ import db from "@/utils/db";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-const jwtSecret = "#1Edsd515add";
+const jwtSecret = process.env.JWT_SECRET;
+
 
 export default async function handler(req, res) {
   let success = false;
