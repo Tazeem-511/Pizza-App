@@ -10,13 +10,13 @@ function About() {
         </h1>
 
         <div className="flex flex-col md:flex-row mb-10">
-          <div className="md:w-1/2 flex justify-center mb-6 md:mb-0">
+          <div className="md:w-1/2 flex justify-center mb-6 md:mb-0 relative h-72">
             <Image
               src="https://wallpaperaccess.com/full/8300629.jpg" // Replace with your image path
               alt="Delicious Pizza"
-              width={500}
-              height={300}
-              className="rounded-lg shadow-lg"
+              fill
+              sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw"
+              className="rounded-lg shadow-lg object-cover"
             />
           </div>
           <div className="md:w-1/2 md:pl-6">
@@ -38,44 +38,44 @@ function About() {
             Meet Our Team
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <Image
-                src="/team-member1.jpg" // Replace with your image path
-                alt="Team Member"
-                width={150}
-                height={150}
-                className="rounded-full mx-auto mb-2"
-              />
-              <h3 className="font-semibold text-white">John Doe</h3>
-              <p className="text-gray-400">Chef</p>
-            </div>
-            <div className="text-center">
-              <Image
-                src="/team-member2.jpg" // Replace with your image path
-                alt="Team Member"
-                width={150}
-                height={150}
-                className="rounded-full mx-auto mb-2"
-              />
-              <h3 className="font-semibold text-white">Jane Smith</h3>
-              <p className="text-gray-400">Manager</p>
-            </div>
-            <div className="text-center">
-              <Image
-                src="/team-member3.jpg" // Replace with your image path
-                alt="Team Member"
-                width={150}
-                height={150}
-                className="rounded-full mx-auto mb-2"
-              />
-              <h3 className="font-semibold text-white">Mike Johnson</h3>
-              <p className="text-gray-400">Delivery Expert</p>
-            </div>
+            {teamMembers.map((member, index) => (
+              <div key={index} className="text-center">
+                <div className="relative w-36 h-36 mx-auto mb-2">
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw"
+                    className="rounded-full"
+                  />
+                </div>
+                <h3 className="font-semibold text-white">{member.name}</h3>
+                <p className="text-gray-400">{member.role}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+const teamMembers = [
+  {
+    name: "John Doe",
+    role: "Chef",
+    image: "/team-member1.jpg", // Replace with your image path
+  },
+  {
+    name: "Jane Smith",
+    role: "Manager",
+    image: "/team-member2.jpg", // Replace with your image path
+  },
+  {
+    name: "Mike Johnson",
+    role: "Delivery Expert",
+    image: "/team-member3.jpg", // Replace with your image path
+  },
+];
 
 export default About;

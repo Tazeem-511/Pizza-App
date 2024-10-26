@@ -1,30 +1,31 @@
-
 import { Inter } from "next/font/google";
-// import cardData from "../store/cardData.json";
 import { useEffect, useState } from "react";
 import { baseUrl } from "@/utils/baseUrl";
 import Head from "next/head";
 import Card from "@/components/home/card";
 import CarouselComponent from "@/components/home/carousel";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ data }) {
   let categories = new Set();
-  let categoryArray;
   const [typeFilter, setTypeFilter] = useState(false);
   const foodData = [];
+
   const handleData = () => {
     data?.map((data) => {
-      return foodData.push(data), categories.add(data.category);
+      foodData.push(data);
+      categories.add(data.category);
     });
   };
 
   handleData();
+
   useEffect(() => {
-    localStorage.setItem("isAdmin", false); //added this line here to prevent anyone from accessing /admin if not logged in.
+    localStorage.setItem("isAdmin", false); // Prevent access to /admin if not logged in.
   }, []);
 
-  categoryArray = [...categories];
+  const categoryArray = [...categories];
 
   return (
     <>
@@ -46,15 +47,9 @@ export default function Home({ data }) {
             className={`border-black rounded-full dark:border-white border-2 py-1 px-3 ${
               typeFilter === "Veg" && "bg-slate-300 dark:bg-slate-600"
             } `}
-            onClick={() => {
-              setTypeFilter("Veg");
-            }}
+            onClick={() => setTypeFilter("Veg")}
           >
-            <span
-              className={
-                "lowercase font-thin bg-white border-green-500 border mr-2 px-0.1 text-green-500"
-              }
-            >
+            <span className="lowercase font-thin bg-white border-green-500 border mr-2 px-0.1 text-green-500">
               ●
             </span>
             Veg
@@ -63,45 +58,34 @@ export default function Home({ data }) {
             className={`border-black rounded-full dark:border-white border-2 py-1 px-3 ${
               typeFilter === "Non-Veg" && "bg-slate-300 dark:bg-slate-600"
             } `}
-            onClick={() => {
-              setTypeFilter("Non-Veg");
-            }}
+            onClick={() => setTypeFilter("Non-Veg")}
           >
-            <span
-              className={
-                "lowercase font-thin bg-white border-red-500 border mr-2 px-0.1 text-red-500"
-              }
-            >
+            <span className="lowercase font-thin bg-white border-red-500 border mr-2 px-0.1 text-red-500">
               ●
             </span>
             Non Veg
           </button>
         </div>
-        {categoryArray.map((category) => {
-          return (
-            <>
-              <div
-                key={category}
-                className=" text-4xl mt-10 mb-3 uppercase font-bold"
-              >
-                {category}
+        {categoryArray.map((category) => (
+          <div key={category}>
+            <div className="text-4xl mt-10 mb-3 uppercase font-bold">
+              {category}
+            </div>
+            <hr />
+            <div className="flex flex-col items-center justify-center">
+              <div className="grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {foodData
+                  ?.filter((food) => category === food.category)
+                  ?.filter((food) =>
+                    typeFilter ? typeFilter === food.foodType : food
+                  )
+                  ?.map((data) => (
+                    <Card key={data.name} foodData={data} />
+                  ))}
               </div>
-              <hr />
-              <div className="flex flex-col items-center justify-center">
-                <div className=" grid mx-auto grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-                  {foodData
-                    ?.filter((foodData) => category === foodData.category)
-                    ?.filter((foodData) =>
-                      typeFilter ? typeFilter === foodData.foodType : foodData
-                    )
-                    ?.map((data) => {
-                      return <Card key={data.name} foodData={data} />;
-                    })}
-                </div>
-              </div>
-            </>
-          );
-        })}
+            </div>
+          </div>
+        ))}
       </div>
     </>
   );
@@ -114,7 +98,7 @@ export async function getStaticProps() {
       .then((response) => response.json())
       .catch((error) => error.message);
 
-    data = await JSON.parse(JSON.stringify(pizzaData)); // step required during deployment in staticProps
+    data = await JSON.parse(JSON.stringify(pizzaData)); // Required during deployment in staticProps
   } catch (error) {
     console.log(error.message);
   }

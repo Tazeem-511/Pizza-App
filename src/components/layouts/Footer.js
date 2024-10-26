@@ -1,17 +1,25 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa"; // Importing social media icons
+import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 function Footer() {
   return (
     <footer className="bg-gray-800 text-white body-font">
       <div className="container mx-auto p-6 flex flex-col md:flex-row items-center justify-between">
         <Link
-          href={"/"}
+          href="/"
           className="flex title-font font-extrabold items-center uppercase text-gray-100"
         >
-          <Image alt="Navbar Logo" src={"/Pizza.svg"} width={60} height={60} />
+          <div className="relative w-16 h-16">
+            <Image
+              alt="Navbar Logo"
+              src="/Pizza.svg"
+              fill
+              style={{ objectFit: "contain" }} // Ensure the image maintains aspect ratio
+              className="rounded-lg"
+            />
+          </div>
           <p className="leading-5 text-xl mx-2">Pizza Wizza</p>
         </Link>
 
@@ -19,18 +27,24 @@ function Footer() {
           <Link
             href="https://www.facebook.com"
             className="text-gray-100 hover:text-gray-300"
+            target="_blank" // Open in new tab
+            rel="noopener noreferrer"
           >
             <FaFacebook size={24} />
           </Link>
           <Link
             href="https://www.instagram.com"
             className="text-gray-100 hover:text-gray-300"
+            target="_blank" // Open in new tab
+            rel="noopener noreferrer"
           >
             <FaInstagram size={24} />
           </Link>
           <Link
             href="https://www.twitter.com"
             className="text-gray-100 hover:text-gray-300"
+            target="_blank" // Open in new tab
+            rel="noopener noreferrer"
           >
             <FaTwitter size={24} />
           </Link>

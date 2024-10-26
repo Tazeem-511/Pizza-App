@@ -27,17 +27,17 @@ function CarouselComponent() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              maxHeight: "38rem", // Adjust maxHeight here
+              maxHeight: "38rem",
               position: "relative",
             }}
           >
             <Image
               src={image}
               alt={`Pizza item ${index + 1}`}
-              width={500} // Reduce width
-              height={400} // Reduce height
-              layout="responsive"
-              objectFit="cover" // Ensure the image covers the entire container
+              width={500}
+              height={400}
+              priority={index === 0} // Add priority for the first image
+              style={{ objectFit: "cover" }} // Use CSS style instead of objectFit
             />
           </div>
         );

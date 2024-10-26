@@ -2,11 +2,8 @@ import { CartContext } from "@/utils/ContextReducer";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useState } from "react";
-// import "./card.module.css"
 
 const Card = (props) => {
-  // const priceOptions = ["regular", "medium", "large"];
-
   const data = props.foodData;
   const { state, dispatch } = useContext(CartContext);
   const priceOptions = Object.keys(data.price);
@@ -36,8 +33,7 @@ const Card = (props) => {
         priceOption: size,
         img: data.img,
       });
-    }
-    if (updateItem) {
+    } else {
       dispatch({
         type: "UPDATE",
         tempId: data["_id"] + size,
@@ -45,51 +41,52 @@ const Card = (props) => {
         qty: qty,
       });
     }
-
-    // console.log(state);
-    //
   };
-
-  
 
   let finalPrice = qty * parseInt(data.price[size]);
 
- return (
-   <div className="card">
-     <Link href={{ pathname: "/Item/[item]" }} as={`Item/${data["_id"]}`}>
-       <div className="image-container">
-         <Image src={data.img} layout="fill" objectFit="cover" alt="pizza" className="card-img" />
-       </div>
-     </Link>
-     <div className="content">
-       <div className="title">{data.name}</div>
-       <p className="description">{data.description}</p>
-     </div>
-     <div className="controls">
-       <select className="qty-select" onChange={handleQty}>
-         {Array.from(Array(6), (e, i) => (
-           <option key={i + 1} value={i + 1}>
-             {i + 1}
-           </option>
-         ))}
-       </select>
-       <select className="size-select" onChange={handleSize}>
-         {priceOptions.map((options) => (
-           <option key={options} value={options}>
-             {options}
-           </option>
-         ))}
-       </select>
-     </div>
-     <div className="footer">
-       <button onClick={handleAddToCart} className="button">
-         Add to cart
-       </button>
-       <p className="price">₹{finalPrice}/-</p>
-     </div>
-   </div>
- );
-
+  return (
+    <div className="card">
+      <Link href={{ pathname: "/Item/[item]", query: { item: data["_id"] } }}>
+        <div className="image-container">
+          <Image
+            src={data.img}
+            alt="pizza"
+            width={300} // Set the appropriate width
+            height={200} // Set the appropriate height
+            className="card-img"
+            style={{ objectFit: "cover" }} // Ensure the image maintains its aspect ratio
+          />
+        </div>
+      </Link>
+      <div className="content">
+        <div className="title">{data.name}</div>
+        <p className="description">{data.description}</p>
+      </div>
+      <div className="controls">
+        <select className="qty-select" onChange={handleQty}>
+          {Array.from(Array(6), (e, i) => (
+            <option key={i + 1} value={i + 1}>
+              {i + 1}
+            </option>
+          ))}
+        </select>
+        <select className="size-select" onChange={handleSize}>
+          {priceOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="footer">
+        <button onClick={handleAddToCart} className="button">
+          Add to cart
+        </button>
+        <p className="price">₹{finalPrice}/-</p>
+      </div>
+    </div>
+  );
 };
 
 export default Card;

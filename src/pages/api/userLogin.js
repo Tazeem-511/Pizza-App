@@ -4,7 +4,18 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const jwtSecret = process.env.ENV_SECRET;
+
+
 export default async function handler(req, res) {
+  // Log environment variables
+  console.log("Database URL:", process.env.DB_URL);
+  console.log(
+    "JWT Secret:",
+    process.env.ENV_SECRET || "ENV_SECRET is not defined"
+  );
+
+  console.log("Public Base URL:", process.env.NEXT_PUBLIC_BASE_URL);
+
   let success = false;
 
   if (req.method === "POST") {
@@ -37,8 +48,13 @@ export default async function handler(req, res) {
       success = true;
       res.json({ success: success, authToken: authToken, isAdmin: isAdmin });
     } catch (error) {
-      console.log(error.message);
+      console.log("Error occurred:", error.message);
       res.send("Server Error");
     }
+  } else {
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
+
+

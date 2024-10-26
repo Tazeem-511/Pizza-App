@@ -5,6 +5,15 @@ import jwt from "jsonwebtoken";
 
 const jwtSecret = process.env.ENV_SECRET;
 export default async function handler(req, res) {
+  // Log environment variables
+  console.log("Database URL:", process.env.DB_URL);
+  console.log(
+    "JWT Secret:",
+    process.env.ENV_SECRET || "ENV_SECRET is not defined"
+  );
+
+  console.log("Public Base URL:", process.env.NEXT_PUBLIC_BASE_URL);
+  
   let success = false;
   const salt = await bcrypt.genSalt(10);
 
